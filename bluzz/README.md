@@ -1,1 +1,1 @@
-It is not currently working gives me *** error on Makefile
+Missing Assembly code and need to fix state machines along with adding figures to the drawings.
