@@ -30,7 +30,7 @@ char toggle_green(){
   char changed = 0;
   if(red_on){
     green_on ^= 1;
-    buzzer_set_period(50);
+    buzzer_set_period(0);
     changed = 1;
   }
   return changed;
@@ -49,8 +49,8 @@ char state1(){
 
 char state2(){ // green light on and make bigger sound
   red_on = 0;
-  green_on = 1;
-  buzzer_set_period(500);
+  buzzer_set_period(100);
+  // diamond();
   leds_changed = 1;
   led_update();
   return 1;
@@ -63,14 +63,12 @@ char state3(){ // leds turn on at the same time, sound turns on when leds are of
     case 0:
       
       red_on = 1;
-      green_on = 1;
       state_change = 1;
       break;
 
     case 1:
 
       red_on = 0;
-      green_on = 0;
       state_change = 0;
       buzzer_set_period(2000);
       break;
@@ -117,7 +115,6 @@ void dim_state_advance(){
   case 0:
     dim_select++;
     red_on = 0;
-    green_on = 0;
     break;
   case 1:
     dim_select++;
@@ -134,7 +131,6 @@ void dim_state_advance(){
   case 4:
     dim_select = 0;
     red_on = 1;
-    green_on = 1;
     break;
   }
 }
@@ -183,7 +179,7 @@ void dim_75(){
   }
   led_update();
 }
-
+/*
 void state_advance(){
   char changed = 0;
   
@@ -211,4 +207,5 @@ void state_advance(){
 
   }
 }
+*/
 
