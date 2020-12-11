@@ -11,7 +11,7 @@ AS		= msp430-elf-gcc -mmcu=${CPU} -c
 all: bluzz.elf
 
 #additional rules for files
-bluzz.elf: ${COMMON_OBJECTS} main.o led.o buzzer.o switches.o stateMachines.o p1_interrupt_handler.o wdt_handler.o
+bluzz.elf: ${COMMON_OBJECTS} main.o led.o buzzer.o switches.o stateMachines.o p1_interrupt_handler.o wdt_handler.o sMachines.o
 	${CC} ${CFLAGS} ${LDFLAGS} -o $@ $^ -lTimer -lLcd
 
 load: bluzz.elf
