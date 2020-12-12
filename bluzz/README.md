@@ -1,3 +1,2 @@
 
-Missing Assembly code and need to fix state machines along with adding figures to the drawings.
-
+Assembly code done but needs fixes, and dim lights will be fixed soon.
