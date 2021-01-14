@@ -47,14 +47,14 @@ void state1(){
   led_update();
 }
 
-void state2(){ // green light on and make bigger sound
+void state2(){ // toggle red just bigger sound
   toggle_red();
   //buzzer_set_period(100);
   leds_changed = 1;
   led_update();
 }
 
-void state3(){ // leds turn on at the same time, sound turns on when leds are off
+void state3(){ // when red led on no sound and when off sound is on
   static short state_change = 0;
   
   switch(state_change){
@@ -75,76 +75,24 @@ void state3(){ // leds turn on at the same time, sound turns on when leds are of
   leds_changed = 1;
   led_update();
 }
-/*
-void state4(){ // everything turns on simultaniously
-  static short change = 0;
-  
-  switch(change){
-    case 0:
-      red_on = 0;
-      buzzer_set_period(0);
-      change++;
-      break;
-
-    case 1:
-      dim_25();
-      buzzer_set_period(50);
-      change++;
-      break;
-
-    case 2:
-      dim_50();
-      change++;
-      buzzer_set_period(100);
-      break;
-
-    case 3:
-      dim_75();
-      change = 0;
-      buzzer_set_period(350);
-      break;
-  }
-  leds_changed = 1;
-  led_update();
-}
-*/
-/*
-char dim_state_advance(){
-  switch(dim_select){
-  case 0:
-    dim_select++;
-    red_on = 0;
-    break;
-  case 1:
-    dim_select++;
-    dim_25();
-    break;
-  case 2:
-    dim_select++;
-    dim_50();
-    break;
-  case 3:
-    dim_select++;
-    dim_75();
-    break;
-  case 4:
-    dim_select = 0;
-    red_on = 1;
-    break;
-  }
-  return 1;
-}
-*/
 
 void dim_25(){
   switch(dimState){
   case 0:
     red_on = 1;
+    dimState = 1;
     break;
   case 1:
+    red_on = 0;
+    dimState = 2;
+    break;
   case 2:
+    red_on = 0;
+    dimState = 3;
+    break;
   case 3:
     red_on = 0;
+    dimState = 0;
     break;
   default: dimState = 0;
   }
@@ -155,12 +103,20 @@ void dim_25(){
 void dim_50(){
   switch(dimState){
   case 0:
+    red_on = 0;
+    dimState = 1;
+    break;
   case 1:
     red_on = 1;
+    dimState = 2;
     break;
   case 2:
-  case 3:
     red_on = 0;
+    dimState = 3;
+    break;
+  case 3:
+    red_on = 1;
+    dimState = 0;
     break;
   default: dimState = 0;
   }
@@ -172,16 +128,45 @@ void dim_75(){
   switch(dimState){
   case 0:
     red_on = 0;
+    dimState = 1;
     break;
   case 1:
+    red_on = 0;
+    dimState = 2;
+    break;
   case 2:
+    red_on = 0;
+    dimState = 3;
+    break;
   case 3:
     red_on = 1;
+    dimState = 0;
     break;
   default: dimState = 0;
   }
   leds_changed = 1;
   led_update();
+}
+
+char dim_state_advance(){
+  char ch = 1;
+  switch(ch){
+  case 1:
+    ch = 2;
+    dim_25();
+   
+  case 2:
+    ch = 3;
+    dim_50();
+   
+  case 3:
+    ch = 1;
+    dim_75();
+   
+  }
+  leds_changed = 1;
+  led_update();
+  return 1;
 }
 
 void state4(){
@@ -191,55 +176,15 @@ void state4(){
   case 0:
     red_on = 0;
     buzzer_set_period(0);
-    change++;
+    change = 1;
     break;
     
   case 1:
-    dim_25();
-    buzzer_set_period(50);
-    change++;
-    break;
-
-  case 2:
-    dim_50();
-    change++;
-    buzzer_set_period(100);
-    break;
-
-  case 3:
-    dim_75();
+    dim_state_advance();
+    buzzer_set_period(250);
     change = 0;
-    buzzer_set_period(350);
     break;
   }
   leds_changed = 1;
   led_update();
 }
-/*
-void state_advance(char ssc){
-  char changed = 0;
-  
-  switch(ssc){
-
-    case 1:
-      changed = state1();
-      break;
-      
-    case 2:
-      
-      changed = state2();
-      break;
-
-    case 3:
-
-      changed = state3();
-      break;
-
-    case 4:
-
-      changed = state4();
-      break;
-  }
-}
-*/
-

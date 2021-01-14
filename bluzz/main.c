@@ -12,14 +12,7 @@
 short redrawScreen = 1;
 u_int fontFgColor = COLOR_GREEN;
 static int x, y;
-
-  /*  
-  if(secCount == 250){
-    state_advance();
-    secCount = 0;
-    fontFgColor = (fontFgColor == COLOR_GREEN) ? COLOR_BLACK : COLOR_GREEN;
-    redrawScreen = 1;
-  */
+static short dimS;
 
 void diamond(){
   for( x = 0; x <= 50; x++){
@@ -57,40 +50,7 @@ void wdt_c_handler(){
     redrawScreen = 1;
     secCount = 0;
   }
-  /*
-  if(++secCount == 125 && switch_state_changed == 1 ){
-    redrawScreen = 1;
-    secCount = 0;
-  }else if(secCount == 250 && switch_state_changed == 2){
-    redrawScreen = 1;
-    secCount = 0;
-  }else if(secCount == 250 && switch_state_changed == 3){
-    redrawScreen = 1;
-    secCount = 0;
-  }else if(secCount == 250 && switch_state_changed == 4){
-    redrawScreen = 1;
-    secCount = 0;
-    }*/
-}  
-  /*  if(secCount == 125 && switch_state_changed == 1){
-    secCount = 0;
-    state_advance();
-    fontFgColor = COLOR_WHITE;
-    redrawScreen = 1;
-  }else if(secCount == 250 && switch_state_changed == 2){
-    secCount = 0;
-    fontFgColor = COLOR_YELLOW;
-    redrawScreen = 1;
-  }else if(secCount == 250 && switch_state_changed == 3){
-    secCount = 0;
-    fontFgColor = COLOR_BLACK;
-    redrawScreen = 1;
-  }else if((secCount == 3) && switch_state_changed == 4){
-    secCount = 0;
-    fontFgColor = COLOR_BLUE;
-    redrawScreen = 1;
-    }*/
-
+}
 
 int main() {
 
@@ -118,19 +78,24 @@ int main() {
       case 1:
 	state1();
 	diamond();
+	dimS = 0;
 	break;
       case 2:
 	colorDiamond();
 	state2();
+	dimS = 0;
 	break;
       case 3:
 	clear();
 	state3();
+	dimS = 0;
 	break;
       case 4:
 	diamond();
 	state4();
 	word();
+	dimS = 1;
+	break;
       }
       redrawScreen = 0;
     }
