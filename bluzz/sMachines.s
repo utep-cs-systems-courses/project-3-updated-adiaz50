@@ -23,11 +23,7 @@ led_on:
 	cmp #3, &s		;if s is bigger than 3
 	jhs default		;jump to default
 	add r12, r12 		; make space by s*2 words are 2 bytes
-	mov jt(r12), r0		; access the s entry into r0
-	
-	cmp #4, &s		; s - 4 dont borrow if s > 3
-	jhs default		; jmp if s > 3 if not c then s is greater than 4
-	mov jt(r12), r0		; move into pc to save 
+	mov jt(r12), r0		; access the s entry into r0 
 
 case1:	
 	add #1, &s
