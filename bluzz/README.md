@@ -1,2 +1,2 @@
 
-Assembly code done but needs fixes, and dim lights will be fixed soon.
+Assembly code ready, dim lights ready, and msp430 is working fine.
